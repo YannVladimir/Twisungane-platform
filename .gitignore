@@ -1,0 +1,45 @@
+# --- Secrets & credentials ---
+CREDENTIALS.md
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.jks
+
+# --- Real member / financial data (never commit) ---
+*.xlsx
+*.xls
+*.docx
+*.csv
+*.sql
+!backend/src/main/resources/db/migration/*.sql
+unmapped_names.txt
+~$*
+
+# --- One-off data migration / diagnostic scripts ---
+/*.py
+__pycache__/
+
+# --- Logs ---
+*.log
+import_run_log.txt
+
+# --- Build output & dependencies ---
+backend/target/
+backend/uploads/
+frontend/node_modules/
+frontend/dist/
+*.zip
+
+# --- Scratch files ---
+/image*.png
+my-analysis.md
+
+# --- IDE / tools ---
+.claude/
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db

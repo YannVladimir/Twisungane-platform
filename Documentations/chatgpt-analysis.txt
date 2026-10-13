@@ -1,0 +1,177 @@
+✅ 2. SYSTEM UNDERSTANDING (Extracted From Your Rules)
+
+From your document , TWISUNGANE is:
+
+🏦 A Financial Mutual Association
+
+Members:
+
+pool money together
+
+lend among themselves
+
+repay with interest
+
+manage social and reserve funds.
+
+Core Concepts Identified
+👥 Membership
+
+Member must have ID.
+
+Must have guarantor/substitute.
+
+Entry payment required:
+
+Share contribution
+
+Bank fees
+
+Social fund
+
+Mandatory reserve.
+
+💰 Financial Components
+
+Shares (Imigabane)
+
+Loans (Inguzanyo)
+
+Interest (Inyungu)
+
+Social Fund
+
+Bank Fees
+
+Mandatory Reserve
+
+Penalties for late payment.
+
+🏛 Governance Structure
+
+General Assembly
+
+Executive Committee
+
+Audit Committee
+
+Advisory Committee
+
+Social Committee.
+
+(Your system roles simplify these into 4 digital roles — good decision.)
+
+💳 Loan Rules
+
+Loans approved by leadership.
+
+Contracts must exist.
+
+Repayment tracking mandatory.
+
+Late payment penalties apply.
+
+📊 Reporting Required
+
+Monthly reports
+
+Member balances
+
+Financial history
+
+Account auditability.
+
+🔐 Important Security Insight (VERY GOOD IDEA)
+
+Your requirement that:
+
+admins cannot edit sensitive data
+
+is excellent — aligns with financial compliance systems.
+
+✅ 3. TRANSLATED & SIMPLIFIED VERSION (ENGLISH SUMMARY)
+
+Here is a developer-friendly translation summary:
+
+TWISUNGANE ASSOCIATION — SUMMARY
+
+Article 1 — Definition
+Twisungane is an association of trusted members united to support each other financially and socially.
+
+Article 2 — Objectives
+
+Pool money for lending between members.
+
+Improve social relationships and mutual assistance.
+
+Article 3 — Membership Requirements
+
+Must possess national ID.
+
+Must provide a guarantor.
+
+Must pay required entry contributions.
+
+Financial Contributions
+New member pays:
+
+Share capital (100,000 FRW)
+
+Bank fee (2,000 FRW yearly)
+
+Social contribution
+
+Mandatory reserve.
+
+Association Account
+
+Funds stored in bank account.
+
+Withdrawals require multiple signatories.
+
+Governance
+Association operates through committees responsible for:
+
+Management
+
+Audit
+
+Advisory
+
+Social affairs.
+
+Loans
+
+Members may request loans.
+
+Loan contracts required.
+
+Repayment monitored.
+
+Penalties applied for delay.
+
+Profits
+
+Interest generated redistributed according to rules.
+
+Records
+
+Association documents must be preserved permanently or for defined duration.
+
+Exit Rules
+Members leaving follow defined financial settlement procedures.
+
+🧠 My Architect Advice (Important)
+
+Your system is actually closer to:
+
+👉 Microfinance Management System
+(not just group saving app)
+
+Meaning later you could scale into:
+
+SACCO platform
+
+Cooperative banking system
+
+Community fintech.
