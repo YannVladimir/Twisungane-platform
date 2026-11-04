@@ -150,10 +150,16 @@ spring:
 
 twisungane:
   encryption:
-    key: ${TWISUNGANE_ENCRYPTION_KEY:...}
+    key: ${ENCRYPTION_SECRET_KEY}
   cookie:
     secure: ${COOKIE_SECURE:false}      # set COOKIE_SECURE=true in .env
 ```
+
+`JWT_SECRET` and `ENCRYPTION_SECRET_KEY` have no default value — the app will refuse to start
+if either is missing from the environment. (An earlier version of this file hardcoded a
+fallback secret directly in `application.yml`; that has been removed because it meant anyone
+reading the source code could forge valid JWTs or decrypt member PII on any deployment that
+forgot to set these variables. Make sure your `.env` always sets both.)
 
 All secrets come from `/opt/twisungane/.env` on the server.
 
@@ -539,7 +545,7 @@ systemctl start twisungane
 |---|---|---|
 | `DB_PASSWORD` | `application.yml` datasource | PostgreSQL password for `twisungane` user |
 | `JWT_SECRET` | `JwtUtil` | 64-char hex. Used to sign/verify JWT tokens. |
-| `TWISUNGANE_ENCRYPTION_KEY` | `EncryptionConverter`, `HmacUtil` | 64-char hex. Encrypts PII (name, nationalId, phone). **Never change after data is stored.** |
+| `ENCRYPTION_SECRET_KEY` | `EncryptionConverter`, `HmacUtil` | 64-char hex. Encrypts PII (name, nationalId, phone). **Never change after data is stored.** |
 | `COOKIE_SECURE` | `application.yml` cookie config | Set to `true` in production (requires HTTPS) |
 
 Generate secrets:

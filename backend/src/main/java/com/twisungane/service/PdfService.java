@@ -25,7 +25,27 @@ public class PdfService {
 
     private final SystemConfigRepository systemConfigRepository;
 
-    private final String LOGO_PATH = "C:\\Users\\Yanba\\Desktop\\Twisungane\\Twisungane\\twisungane-logo.webp";
+    // Previously this was a hardcoded absolute path to a Windows developer machine
+    // ("C:\Users\Yanba\..."), so it could never resolve on the production Linux server, and the
+    // file itself was a .webp — a format OpenPDF/iText cannot decode (it only understands
+    // BMP/GIF/JPEG/PNG/TIFF/WMF), so even locally the logo silently failed to load every single
+    // time. Both failures were swallowed by a bare `catch (Exception e) {}`, so no report ever
+    // showed the logo and nobody could tell from the logs. Fixed by bundling a PNG copy of the
+    // logo on the classpath and loading it as a resource, which works the same on every machine.
+    private static final String LOGO_RESOURCE = "/static/logo.png";
+
+    private byte[] loadLogoBytes() {
+        try (java.io.InputStream in = getClass().getResourceAsStream(LOGO_RESOURCE)) {
+            if (in == null) {
+                log.warn("Logo resource {} not found on classpath; PDFs will omit the logo.", LOGO_RESOURCE);
+                return null;
+            }
+            return in.readAllBytes();
+        } catch (java.io.IOException e) {
+            log.warn("Failed to read logo resource {}; PDFs will omit the logo.", LOGO_RESOURCE, e);
+            return null;
+        }
+    }
 
     public byte[] generateMemberStatement(Member m, List<ShareRecord> shares, List<Loan> loans, List<Penalty> penalties) {
         Document document = new Document(PageSize.A4);
@@ -526,13 +546,18 @@ public class PdfService {
 
     private void addHeader(Document document, String titleStr) throws Exception {
         Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18, Color.DARK_GRAY);
-        
-        try {
-            Image logo = Image.getInstance(LOGO_PATH);
-            logo.setAlignment(Element.ALIGN_CENTER);
-            logo.scaleToFit(80, 80);
-            document.add(logo);
-        } catch (Exception e) {}
+
+        byte[] logoBytes = loadLogoBytes();
+        if (logoBytes != null) {
+            try {
+                Image logo = Image.getInstance(logoBytes);
+                logo.setAlignment(Element.ALIGN_CENTER);
+                logo.scaleToFit(80, 80);
+                document.add(logo);
+            } catch (Exception e) {
+                log.warn("Failed to embed logo image in PDF", e);
+            }
+        }
 
         Paragraph title = new Paragraph(titleStr, titleFont);
         title.setAlignment(Element.ALIGN_CENTER);
@@ -554,14 +579,22 @@ public class PdfService {
             Font bodyFont = FontFactory.getFont(FontFactory.HELVETICA, 12, Color.BLACK);
             Font boldFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, Color.BLACK);
 
-            // Add Logo if exists (Simplified for now, WebP might need extra handling)
-            try {
-                Image logo = Image.getInstance(LOGO_PATH);
-                logo.setAlignment(Element.ALIGN_CENTER);
-                logo.scaleToFit(100, 100);
-                document.add(logo);
-            } catch (Exception e) {
-                // Skip logo if error
+            // Add logo if the classpath resource is present and decodable; otherwise fall back
+            // to a text placeholder so the document still renders.
+            byte[] logoBytes = loadLogoBytes();
+            boolean logoAdded = false;
+            if (logoBytes != null) {
+                try {
+                    Image logo = Image.getInstance(logoBytes);
+                    logo.setAlignment(Element.ALIGN_CENTER);
+                    logo.scaleToFit(100, 100);
+                    document.add(logo);
+                    logoAdded = true;
+                } catch (Exception e) {
+                    log.warn("Failed to embed logo image in loan contract PDF", e);
+                }
+            }
+            if (!logoAdded) {
                 Paragraph placeholder = new Paragraph("TWISUNGANE ASSOCIATION", subTitleFont);
                 placeholder.setAlignment(Element.ALIGN_CENTER);
                 document.add(placeholder);

@@ -2,6 +2,10 @@
 CREDENTIALS.md
 .env
 .env.*
+# .env.* above is meant to catch real secret files (.env.local, .env.production, ...), but it
+# was also silently swallowing the committed template itself — anyone adding `.env.example`
+# would never notice it wasn't actually tracked. Carve out an explicit exception for it.
+!.env.example
 *.pem
 *.key
 *.p12

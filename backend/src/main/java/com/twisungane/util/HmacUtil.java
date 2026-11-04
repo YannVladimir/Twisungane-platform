@@ -14,7 +14,7 @@ public class HmacUtil {
 
     private final byte[] keyBytes;
 
-    public HmacUtil(@Value("${twisungane.encryption.key:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}") String secretKey) {
+    public HmacUtil(@Value("${twisungane.encryption.key}") String secretKey) {
         byte[] raw = secretKey.getBytes(StandardCharsets.UTF_8);
         this.keyBytes = new byte[32];
         System.arraycopy(raw, 0, this.keyBytes, 0, Math.min(raw.length, 32));
