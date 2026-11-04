@@ -25,7 +25,7 @@ public class EncryptionConverter implements AttributeConverter<String, String> {
     private final SecretKeySpec keySpec;
     private final SecureRandom secureRandom = new SecureRandom();
 
-    public EncryptionConverter(@Value("${twisungane.encryption.key:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}") String secretKey) {
+    public EncryptionConverter(@Value("${twisungane.encryption.key}") String secretKey) {
         // Ensure key is 32 bytes (256 bits)
         byte[] keyBytes = secretKey.getBytes(StandardCharsets.UTF_8);
         byte[] finalKey = new byte[32];

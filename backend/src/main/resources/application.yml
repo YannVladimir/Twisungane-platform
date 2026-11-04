@@ -27,9 +27,13 @@ server:
 
 twisungane:
   jwt:
-    secret: ${JWT_SECRET:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
+    # No hardcoded fallback: both JWT_SECRET and ENCRYPTION_SECRET_KEY are only ever read from
+    # the environment now. Previously this had a hardcoded hex default that was committed to
+    # git history, so anyone reading the source could forge valid JWTs or decrypt PII in any
+    # deployment that forgot to set the env var. Spring now fails fast at startup instead.
+    secret: ${JWT_SECRET}
     expiration: 86400000
   encryption:
-    key: ${ENCRYPTION_SECRET_KEY:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
+    key: ${ENCRYPTION_SECRET_KEY}
   cookie:
     secure: ${COOKIE_SECURE:false}
